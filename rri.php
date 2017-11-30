@@ -1,3 +1,23 @@
+<?php
+
+$conn = stream_socket_client("ssl://rri.test.denic.de:51131", $errno, $errstr);
+
+function RRI_Pack($len)
+{
+    $pack = pack("N",$len);
+    echo "\nPack: " . $pack;
+    return $pack;
+
+}
+
+function RRI_Unpack($len)
+{
+    $unpack = unpack("N",$len);
+    echo "\nUnpack: " . var_dump($unpack);
+    return $unpack[1];
+
+}
+
 //Lesen von Daten:
 function RRI_Read($conn)
 {
@@ -17,7 +37,6 @@ function RRI_Read($conn)
     return $answer;
 }
 
-
 //Senden von Daten:
 function RRI_Send($conn, $order)
 {
@@ -27,3 +46,14 @@ function RRI_Send($conn, $order)
     $bytes_send=fwrite($conn,$order,$len); 	// send order
     return $bytes_send;
 }
+
+$user = "";
+$password = "";
+
+$return = RRI_Send($conn, "version: 2.0\naction: LOGIN\nuser: $user\npassword: $password\n");
+$return = RRI_Read($conn);
+
+$return = RRI_Send($conn, "Version: 2.0\nAction: INFO\nDomain: denic.de\n");
+$return = RRI_Read($conn);
+
+?>
