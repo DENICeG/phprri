@@ -1,9 +1,9 @@
 <?php
 // Voraussetzung: sudo apt-get install php5-cli
  
-$rri_socket_address = "ssl://rri.test.denic.de:51131";
+$rriSocketAddress = "ssl://rri.test.denic.de:51131";
  
-$conn = stream_socket_client("$rri_socket_address", $errno, $errstr);
+$conn = stream_socket_client("$rriSocketAddress", $errno, $errstr);
  
 //Senden von Daten:
 function RRI_Send($conn, $order)
@@ -46,12 +46,12 @@ function RRI_Unpack($len)
  
 function handle_RRI_orders($conn, $orders, $outputFile)
 {
-    $splitted_orders = explode("=-=\n", $orders);
+    $splittedOrders = explode("=-=\n", $orders);
      
-    foreach ($splitted_orders as $single_order)
+    foreach ($splittedOrders as $singleOrder)
         {
-            echo "\nOrder:\n" . $single_order;
-            RRI_Send($conn, $single_order);
+            echo "\nOrder:\n" . $singleOrder;
+            RRI_Send($conn, $singleOrder);
             $answer = RRI_Read($conn);
             fwrite($outputFile, $answer . "\n=-=\n");
             echo "\nAnswer:\n" . $answer;
