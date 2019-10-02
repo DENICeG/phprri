@@ -50,10 +50,10 @@ function RRI_Send($conn, $order)
 $user = "";
 $password = "";
 
-$return = RRI_Send($conn, "version: 2.0\naction: LOGIN\nuser: $user\npassword: $password\n");
+$return = RRI_Send($conn, "version: 3.0\naction: LOGIN\nuser: $user\npassword: $password\n");
 $return = RRI_Read($conn);
 
-$return = RRI_Send($conn, "Version: 2.0\nAction: INFO\nDomain: denic.de\n");
+$return = RRI_Send($conn, "Version: 3.0\nAction: INFO\nDomain: denic.de\n");
 $return = RRI_Read($conn);
 
 ?>
